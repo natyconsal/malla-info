@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Malla Interactiva - Ingeniería Informática UBA (Plan 2022)</title>
+  <style>
+    body { font-family: sans-serif; background: #f5f5f5; padding: 20px; }
+    h2 { margin-top: 30px; }
+    .materia {
+      display: inline-block;
+      margin: 6px;
+      padding: 8px 12px;
+      border: 2px solid #555;
+      border-radius: 6px;
+      background: #fff;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .materia.aprobada {
+      background-color: #c8e6c9;
+      border-color: #2e7d32;
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Malla Interactiva - Ingeniería Informática (UBA, Plan 2022)</h1>
+<p>Hacé clic en una materia para marcarla como aprobada.</p>
+
+<h2>CBC</h2>
+<div class="materia" data-id="cbc-analisis">Análisis Matemático CBC</div>
+<div class="materia" data-id="cbc-algebra">Álgebra CBC</div>
+<div class="materia" data-id="cbc-fisica">Física CBC</div>
+<div class="materia" data-id="cbc-quimica">Química CBC</div>
+<div class="materia" data-id="cbc-icse">ICSE</div>
+<div class="materia" data-id="cbc-ipc">IPC</div>
+
+<h2>1er Año</h2>
+<div class="materia" data-id="analisis1">Análisis Matemático I</div>
+<div class="materia" data-id="algebra1">Álgebra y Geometría Analítica</div>
+<div class="materia" data-id="algo1">Algoritmos y Estructuras de Datos I</div>
+<div class="materia" data-id="quimica">Química</div>
+<div class="materia" data-id="fisica1">Física I</div>
+
+<h2>2do Año</h2>
+<div class="materia" data-id="analisis2">Análisis Matemático II</div>
+<div class="materia" data-id="fisica2">Física II</div>
+<div class="materia" data-id="algo2">Algoritmos y Estructuras de Datos II</div>
+<div class="materia" data-id="arq1">Arquitectura de Computadoras</div>
+<div class="materia" data-id="ayedi">Análisis y Diseño de Sistemas</div>
+
+<h2>3er Año</h2>
+<div class="materia" data-id="org1">Organización del Computador I</div>
+<div class="materia" data-id="sistoper">Sistemas Operativos</div>
+<div class="materia" data-id="bd">Bases de Datos</div>
+<div class="materia" data-id="tdc">Teoría de Control</div>
+<div class="materia" data-id="metodologia">Metodología de Sistemas</div>
+
+<h2>4to Año</h2>
+<div class="materia" data-id="org2">Organización del Computador II</div>
+<div class="materia" data-id="redes">Redes de Computadoras</div>
+<div class="materia" data-id="gestion">Gestión de Datos</div>
+<div class="materia" data-id="simulacion">Simulación</div>
+
+<h2>5to Año</h2>
+<div class="materia" data-id="proyecto">Proyecto Final</div>
+<div class="materia" data-id="tesis">Trabajo de Tesis / Seminario</div>
+
+<h2>Electivas (editables)</h2>
+<div class="materia" data-id="electiva1">Electiva 1 (podés cambiar el nombre)</div>
+<div class="materia" data-id="electiva2">Electiva 2</div>
+<div class="materia" data-id="electiva3">Electiva 3</div>
+
+<script>
+  const materias = document.querySelectorAll('.materia');
+
+  materias.forEach(materia => {
+    const id = materia.dataset.id;
+    const aprobado = localStorage.getItem(id);
+    if (aprobado === '1') materia.classList.add('aprobada');
+
+    materia.addEventListener('click', () => {
+      materia.classList.toggle('aprobada');
+      localStorage.setItem(id, materia.classList.contains('aprobada') ? '1' : '0');
+    });
+  });
+</script>
+
+</body>
+</html>
