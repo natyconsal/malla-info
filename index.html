@@ -116,7 +116,6 @@
   </div>
 </div>
 <script>
-  // Correlativas: clave = materia, valor = array de materias prerequisito
   const correlativas = {
     "analisis2": ["cbc-analisis", "cbc-algebra", "cbc-pc", "cbc-fisica", "cbc-icse", "cbc-ipc"],
     "programa": ["cbc-analisis", "cbc-algebra", "cbc-pc", "cbc-fisica", "cbc-icse", "cbc-ipc"],
@@ -150,7 +149,16 @@
 
   const materias = document.querySelectorAll('.materia');
 
-  // Función para actualizar qué materias están activas/inactivas
+  // Cargar estado aprobado de cada materia desde localStorage
+  materias.forEach(materia => {
+    const id = materia.dataset.id;
+    const aprobado = localStorage.getItem(id);
+    if (aprobado === '1') {
+      materia.classList.add('aprobada');
+    }
+  });
+
+  // Verificá qué materias deben estar inactivas por correlativas
   function actualizarEstadoMaterias() {
     materias.forEach(materia => {
       const id = materia.dataset.id;
@@ -163,59 +171,37 @@
         materia.style.opacity = '1';
       } else {
         materia.classList.add('inactiva');
-        materia.style.pointerEvents = 'none';
-        materia.style.opacity = '0.5';
-        materia.classList.remove('aprobada'); // si estaba marcada, desmarcarla porque no puede estar aprobada aún
-        localStorage.setItem(id, '0');       // y guardar que no está aprobada
+        materia.classList.remove('aprobada');
+        localStorage.setItem(id, '0');
       }
     });
   }
 
-  // Inicialización: cargar estado guardado y actualizar estado materias
-  materias.forEach(materia => {
-    const id = materia.dataset.id;
-    const aprobado = localStorage.getItem(id);
-    if (aprobado === '1') materia.classList.add('aprobada');
-  });
-
   actualizarEstadoMaterias();
 
-  // Agregar evento click para toggle aprobado y actualizar estado
+  // Toggle de aprobación al hacer clic
   materias.forEach(materia => {
     materia.addEventListener('click', () => {
+      const id = materia.dataset.id;
+
       if (!materia.classList.contains('inactiva')) {
+        const estabaAprobada = materia.classList.contains('aprobada');
         materia.classList.toggle('aprobada');
-        localStorage.setItem(materia.dataset.id, materia.classList.contains('aprobada') ? '1' : '0');
+
+        // Guardar o quitar del localStorage
+        if (estabaAprobada) {
+          localStorage.setItem(id, '0'); // destildada
+        } else {
+          localStorage.setItem(id, '1'); // marcada
+        }
+
+        // Volver a evaluar qué materias habilitar
         actualizarEstadoMaterias();
       }
     });
   });
-
-  document.querySelectorAll('.materia').forEach(materia => {
-  materia.addEventListener('click', () => {
-    materia.classList.toggle('aprobada');
-
-    // Guardar en localStorage
-    const estados = {};
-    document.querySelectorAll('.materia').forEach(m => {
-      estados[m.dataset.id] = m.classList.contains('aprobada');
-    });
-    localStorage.setItem('estadoMaterias', JSON.stringify(estados));
-  });
-});
-
-window.addEventListener('DOMContentLoaded', () => {
-  const estadoGuardado = JSON.parse(localStorage.getItem('estadoMaterias'));
-  if (estadoGuardado) {
-    document.querySelectorAll('.materia').forEach(m => {
-      if (estadoGuardado[m.dataset.id]) {
-        m.classList.add('aprobada');
-      }
-    });
-  }
-});
-
 </script>
+
 
 </body>
 </html>
