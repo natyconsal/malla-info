@@ -1,32 +1,44 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Ingeniería Informática UBA (Plan 2022)</title>
+  <title>Ingeniería en Informática</title>
   <style>
-    body { font-family: sans-serif; background: #f5f5f5; padding: 20px; }
+    body { font-family: sans-serif; background: #e1d4e0; padding: 20px;color: hsl(302, 96%, 19%); }
     h2 { margin-top: 30px; }
     .materia {
       display: inline-block;
       margin: 6px;
       padding: 8px 12px;
-      border: 2px solid #555;
+      border: 2px solid #ddaadb;
       border-radius: 6px;
       background: #fff;
       cursor: pointer;
       transition: all 0.2s ease;
+      user-select: none;
+    }
+    .materia:hover{
+      border: 2px solid #d270cf;
+      background: #fae7f9;
     }
     .materia.aprobada {
       background-color: #c8e6c9;
-      border-color: #2e7d32;
+      border-color: #77a379;
+    }
+    .materia.inactiva {
+      cursor: not-allowed;
+      background-color: #fcf1fb;
+      color: #aca3ab;
+      border-color: #ccc;
+      pointer-events: none;
+      text-decoration: none !important;
     }
   </style>
 </head>
 <body>
 
-<h1>Malla Interactiva - Ingeniería Informática (UBA, Plan 2022)</h1>
-<p>Hacé clic en una materia para marcarla como aprobada.</p>
+<h1>Ingeniería en Informática</h1>
+<p>Natalia Belen Consal - Inicio 2025</p>
 
 <h2>CBC - 1er Año</h2>
 <div class="materia" data-id="cbc-analisis">Análisis Matemático</div>
@@ -58,9 +70,9 @@
 <div class="materia" data-id="ciencia-datos">Ciencia de Datos</div>
 <div class="materia" data-id="sist-info">Gestión del Desarrollo de Sistemas Informáticos</div>
 <div class="materia" data-id="prog-concu">Programación Concurrente</div>
+<div class="materia" data-id="fisica2">Física para Informática (necesitan 120 créditos)</div>
 <div class="materia" data-id="redes">Redes</div>
-<div class="materia" data-id="fisica2">Física para Informática</div>
-<div class="materia" data-id="empresas1">Empresas de Base Tecnológica I</div>
+<div class="materia" data-id="empresas1">Empresas de Base Tecnológica I (necesitan 120 créditos)</div>
 <div class="materia" data-id="ing-soft2">Ingeniería de Software II</div>
 <div class="materia" data-id="sist-distri1">Sistemas Distribuidos I</div>
 
@@ -74,16 +86,78 @@
 
 
 <script>
+  // Correlativas: clave = materia, valor = array de materias prerequisito
+  const correlativas = {
+    "analisis2": ["cbc-analisis", "cbc-algebra", "cbc-pc", "cbc-fisica", "cbc-icse", "cbc-ipc"],
+    "programa": ["cbc-analisis", "cbc-algebra", "cbc-pc", "cbc-fisica", "cbc-icse", "cbc-ipc"],
+    "software": ["cbc-analisis", "cbc-algebra", "cbc-pc", "cbc-fisica", "cbc-icse", "cbc-ipc"],
+    "algebra": ["cbc-analisis", "cbc-algebra", "cbc-pc", "cbc-fisica", "cbc-icse", "cbc-ipc"],
+    "org-compu": ["programa", "software"],
+    "algo1": ["programa"],
+    "prob-esta": ["analisis2", "algebra"],
+    "teo-algo": ["software", "algo1"],
+    "algo2": ["org-compu"],
+    "arq1": ["algo1", "software"],
+    "datos": ["org-compu", "arq1"],
+    "numerica": ["analisis2", "algebra", "algo1"],
+    "taller-prog": ["org-compu", "arq1"],
+    "ing-soft1": ["arq1"],
+    "ciencia-datos": ["prob-esta", "datos", "numerica", "teo-algo"],
+    "sist-info": ["ing-soft1"],
+    "prog-concu": ["algo2", "taller-prog"],
+    "redes": ["algo2"],
+    "fisica2": ["ing-soft1"],
+    "empresas1": ["ing-soft1"],
+    "ing-soft2": ["ing-soft1", "datos", "taller-prog"],
+    "sist-distri1": ["prog-concu", "redes"],
+    "seg-info": ["redes"],
+    "tesis1": ["redes"],
+    "empresas2": ["empresas1"],
+    "tesis2": ["tesis1"],
+    "electiva1": ["tesis1"],
+    "electiva2": ["tesis1"]
+  };
+
   const materias = document.querySelectorAll('.materia');
 
+  // Función para actualizar qué materias están activas/inactivas
+  function actualizarEstadoMaterias() {
+    materias.forEach(materia => {
+      const id = materia.dataset.id;
+      const prereqs = correlativas[id] || [];
+      const cumplidas = prereqs.every(pr => localStorage.getItem(pr) === '1');
+
+      if (cumplidas) {
+        materia.classList.remove('inactiva');
+        materia.style.pointerEvents = 'auto';
+        materia.style.opacity = '1';
+      } else {
+        materia.classList.add('inactiva');
+        materia.style.pointerEvents = 'none';
+        materia.style.opacity = '0.5';
+        materia.classList.remove('aprobada'); // si estaba marcada, desmarcarla porque no puede estar aprobada aún
+        localStorage.setItem(id, '0');       // y guardar que no está aprobada
+      }
+    });
+  }
+
+  // Inicialización: cargar estado guardado y actualizar estado materias
   materias.forEach(materia => {
     const id = materia.dataset.id;
     const aprobado = localStorage.getItem(id);
     if (aprobado === '1') materia.classList.add('aprobada');
+  });
 
+  actualizarEstadoMaterias();
+
+  // Agregar evento click para toggle aprobado y actualizar estado
+  materias.forEach(materia => {
     materia.addEventListener('click', () => {
-      materia.classList.toggle('aprobada');
-      localStorage.setItem(id, materia.classList.contains('aprobada') ? '1' : '0');
+      if (!materia.classList.contains('inactiva')) {
+        materia.classList.toggle('aprobada');
+        localStorage.setItem(materia.dataset.id, materia.classList.contains('aprobada') ? '1' : '0');
+        actualizarEstadoMaterias();
+      }
     });
   });
 </script>
