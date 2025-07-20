@@ -190,6 +190,31 @@
       }
     });
   });
+
+  document.querySelectorAll('.materia').forEach(materia => {
+  materia.addEventListener('click', () => {
+    materia.classList.toggle('aprobada');
+
+    // Guardar en localStorage
+    const estados = {};
+    document.querySelectorAll('.materia').forEach(m => {
+      estados[m.dataset.id] = m.classList.contains('aprobada');
+    });
+    localStorage.setItem('estadoMaterias', JSON.stringify(estados));
+  });
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  const estadoGuardado = JSON.parse(localStorage.getItem('estadoMaterias'));
+  if (estadoGuardado) {
+    document.querySelectorAll('.materia').forEach(m => {
+      if (estadoGuardado[m.dataset.id]) {
+        m.classList.add('aprobada');
+      }
+    });
+  }
+});
+
 </script>
 
 </body>
