@@ -5,7 +5,8 @@
   <title>Ingeniería en Informática</title>
   <style>
     body { font-family: sans-serif; background: #e1d4e0; padding: 20px;color: hsl(302, 96%, 19%); }
-    h2 { margin-top: 30px; }
+    h1{margin-top: 0;}
+    h2 { margin-top: 20px; }
     .materia {
       display: inline-block;
       margin: 6px;
@@ -33,6 +34,25 @@
       pointer-events: none;
       text-decoration: none !important;
     }
+    .malla {
+      display: flex;
+      gap: 30px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+    }
+
+    .grupo {
+      min-width: 200px;
+      background: #f8f0f7;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .grupo h2 {
+      text-align: center;
+    }
+
   </style>
 </head>
 <body>
@@ -40,51 +60,61 @@
 <h1>Ingeniería en Informática</h1>
 <p>Natalia Belen Consal - Inicio 2025</p>
 
-<h2>CBC - 1er Año</h2>
-<div class="materia" data-id="cbc-analisis">Análisis Matemático</div>
-<div class="materia" data-id="cbc-algebra">Álgebra</div>
-<div class="materia" data-id="cbc-fisica">Física</div>
-<div class="materia" data-id="cbc-pc">Pensamiento Computacional</div>
-<div class="materia" data-id="cbc-icse">ICSE</div>
-<div class="materia" data-id="cbc-ipc">IPC</div>
+<div class="malla">
+  <div class="grupo">
+    <h2>CBC - 1er Año</h2>
+    <div class="materia" data-id="cbc-analisis">Análisis Matemático</div>
+    <div class="materia" data-id="cbc-algebra">Álgebra</div>
+    <div class="materia" data-id="cbc-fisica">Física</div>
+    <div class="materia" data-id="cbc-pc">Pensamiento Computacional</div>
+    <div class="materia" data-id="cbc-icse">ICSE</div>
+    <div class="materia" data-id="cbc-ipc">IPC</div>
+  </div>
 
-<h2>2do Año</h2>
-<div class="materia" data-id="analisis2">Análisis Matemático II</div>
-<div class="materia" data-id="programa">Fundamentos de Programación</div>
-<div class="materia" data-id="software">Introducción al Desarrollo del Software</div>
-<div class="materia" data-id="algebra">Álgebra Lineal</div>
-<div class="materia" data-id="org-compu">Organización del Computador</div>
-<div class="materia" data-id="algo1">Algoritmos y Estructuras de Datos</div>
+  <div class="grupo">
+    <h2>2do Año</h2>
+    <div class="materia" data-id="analisis2">Análisis Matemático II</div>
+    <div class="materia" data-id="programa">Fundamentos de Programación</div>
+    <div class="materia" data-id="software">Introducción al Desarrollo del Software</div>
+    <div class="materia" data-id="algebra">Álgebra Lineal</div>
+    <div class="materia" data-id="org-compu">Organización del Computador</div>
+    <div class="materia" data-id="algo1">Algoritmos y Estructuras de Datos</div>
+  </div>
 
-<h2>3er Año</h2>
-<div class="materia" data-id="prob-esta">Probabilidad y Estadística</div>
-<div class="materia" data-id="teo-algo">Teoría de Algoritmos</div>
-<div class="materia" data-id="algo2">Sistemas Operativos</div>
-<div class="materia" data-id="arq1">Paradigmas de Programación</div>
-<div class="materia" data-id="datos">Base de Datos</div>
-<div class="materia" data-id="numerica">Modelación Númerica</div>
-<div class="materia" data-id="taller-prog">Taller de Programación</div>
-<div class="materia" data-id="ing-soft1">Ingeniería de Software I</div>
+  <div class="grupo">
+    <h2>3er Año</h2>
+    <div class="materia" data-id="prob-esta">Probabilidad y Estadística</div>
+    <div class="materia" data-id="teo-algo">Teoría de Algoritmos</div>
+    <div class="materia" data-id="algo2">Sistemas Operativos</div>
+    <div class="materia" data-id="arq1">Paradigmas de Programación</div>
+    <div class="materia" data-id="datos">Base de Datos</div>
+    <div class="materia" data-id="numerica">Modelación Númerica</div>
+    <div class="materia" data-id="taller-prog">Taller de Programación</div>
+    <div class="materia" data-id="ing-soft1">Ingeniería de Software I</div>
+  </div>
 
-<h2>4to Año</h2>
-<div class="materia" data-id="ciencia-datos">Ciencia de Datos</div>
-<div class="materia" data-id="sist-info">Gestión del Desarrollo de Sistemas Informáticos</div>
-<div class="materia" data-id="prog-concu">Programación Concurrente</div>
-<div class="materia" data-id="fisica2">Física para Informática (necesitan 120 créditos)</div>
-<div class="materia" data-id="redes">Redes</div>
-<div class="materia" data-id="empresas1">Empresas de Base Tecnológica I (necesitan 120 créditos)</div>
-<div class="materia" data-id="ing-soft2">Ingeniería de Software II</div>
-<div class="materia" data-id="sist-distri1">Sistemas Distribuidos I</div>
+  <div class="grupo">
+    <h2>4to Año</h2>
+    <div class="materia" data-id="ciencia-datos">Ciencia de Datos</div>
+    <div class="materia" data-id="sist-info">Gestión del Desarrollo de Sistemas Informáticos</div>
+    <div class="materia" data-id="prog-concu">Programación Concurrente</div>
+    <div class="materia" data-id="redes">Redes</div>
+    <div class="materia" data-id="fisica2">Física para Informática</div>
+    <div class="materia" data-id="empresas1">Empresas de Base Tecnológica I</div>
+    <div class="materia" data-id="ing-soft2">Ingeniería de Software II</div>
+    <div class="materia" data-id="sist-distri1">Sistemas Distribuidos I</div>
+  </div>
 
-<h2>5to Año</h2>
-<div class="materia" data-id="seg-info">Taller de Seguridad Informática</div>
-<div class="materia" data-id="electiva1">Electiva I</div>
-<div class="materia" data-id="tesis1">Tesis o Trabajo Profesional I</div>
-<div class="materia" data-id="empresas2">Empresas de Base Tecnológica II</div>
-<div class="materia" data-id="electiva2">Electiva II</div>
-<div class="materia" data-id="tesis2">Tesis o Trabajo Profesional II</div>
-
-
+  <div class="grupo">
+    <h2>5to Año</h2>
+    <div class="materia" data-id="seg-info">Taller de Seguridad Informática</div>
+    <div class="materia" data-id="electiva1">Electiva I</div>
+    <div class="materia" data-id="tesis1">Tesis o Trabajo Profesional I</div>
+    <div class="materia" data-id="empresas2">Empresas de Base Tecnológica II</div>
+    <div class="materia" data-id="electiva2">Electiva II</div>
+    <div class="materia" data-id="tesis2">Tesis o Trabajo Profesional II</div>
+  </div>
+</div>
 <script>
   // Correlativas: clave = materia, valor = array de materias prerequisito
   const correlativas = {
@@ -106,12 +136,12 @@
     "sist-info": ["ing-soft1"],
     "prog-concu": ["algo2", "taller-prog"],
     "redes": ["algo2"],
-    "fisica2": ["ing-soft1"],
-    "empresas1": ["ing-soft1"],
+    "fisica2": ["ing-soft1", "prob-esta", "teo-algo", "algo2", "arq1", "datos", "numerica", "taller-prog"],
+    "empresas1": ["ing-soft1", "prob-esta", "teo-algo", "algo2", "arq1", "datos", "numerica", "taller-prog"],
     "ing-soft2": ["ing-soft1", "datos", "taller-prog"],
     "sist-distri1": ["prog-concu", "redes"],
     "seg-info": ["redes"],
-    "tesis1": ["redes"],
+    "tesis1": ["ciencia-datos", "sist-info", "prog-concu", "redes"],
     "empresas2": ["empresas1"],
     "tesis2": ["tesis1"],
     "electiva1": ["tesis1"],
